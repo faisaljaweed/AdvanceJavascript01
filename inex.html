@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Search</title>
+</head>
+<body>
+    <h1>Mobile Search</h1>
+    <div>
+        <label for="brand">Select Brand:</label>
+        <select id="brand" onchange="populateModels()">
+            <option value="">Select Brand</option>
+        </select>
+    </div>
+    <div>
+        <label for="model">Select Model:</label>
+        <select id="model" onchange="displayDetails()">
+            <option value="">Select Model</option>
+        </select>
+    </div>
+    <div id="details">
+        <!-- Mobile details will be displayed here -->
+    </div>
+
+    <script>
+        var mobiles = {
+            mobiles: {
+                Samsung: {
+                    SamsungA10: {
+                        name: "Samsung A10",
+                        ram: "4gb",
+                        rom: "64gb",
+                        camera: "13",
+                        price: "22,000 PKR"
+                    },
+                    SamsungA20: {
+                        name: "Samsung A20",
+                        ram: "4gb",
+                        rom: "64gb",
+                        camera: "18",
+                        price: "28,000"
+                    },
+                    SamsungA30: {
+                        name: "Samsung A30",
+                        ram: "4gb",
+                        rom: "64gb",
+                        camera: "25",
+                        price: "29,000"
+                    }
+                },
+                IPhone: {
+                    IPhone11: {
+                        name: "IPhone11",
+                        ram: "4gb",
+                        rom: "64gb",
+                        camera: "12",
+                        price: "100,000"
+                    },
+                    IPhone12: {
+                        name: "IPhone12",
+                        ram: "4gb",
+                        rom: "64gb",
+                        camera: "12",
+                        price: "150,000"
+                    },
+                    IPhone13: {
+                        name: "IPhone13",
+                        ram: "6gb",
+                        rom: "128gb",
+                        camera: "24",
+                        price: "200,000"
+                    }
+                },
+                Oppo: {
+                    OppoV20: {
+                        name: "OppoV20",
+                        ram: "8gb",
+                        rom: "128gb",
+                        camera: "64",
+                        price: "54,999"
+                    },
+                    OppoF19: {
+                        name: "OppoF19",
+                        ram: "6gb",
+                        rom: "128gb",
+                        camera: "48",
+                        price: "36,999"
+                    },
+                    OppoF11: {
+                        name: "OppoF11",
+                        ram: "4gb",
+                        rom: "64gb",
+                        camera: "48",
+                        price: "35,999"
+                    }
+                },
+                Vivo: {
+                    VivoY20: {
+                        name: "VivoY20",
+                        ram: "4gb",
+                        rom: "64gb",
+                        camera: "13",
+                        price: "26,999"
+                    },
+                    VivoY21: {
+                        name: "VivoY21",
+                        ram: "4gb",
+                        rom: "64gb",
+                        camera: "13",
+                        price: "43,999"
+                    },
+                    VivoY55: {
+                        name: "VivoY55",
+                        ram: "8gb",
+                        rom: "128gb",
+                        camera: "50",
+                        price: "64,999"
+                    }
+                }
+            }
+        };
+
+        var brandSelect = document.getElementById("brand");
+        for (var brand in mobiles.mobiles) {
+            var option = document.createElement("option");
+            option.value = brand;
+            option.text = brand;
+            brandSelect.add(option);
+        }
+
+        function populateModels() {
+            var brandSelect = document.getElementById("brand");
+            var modelSelect = document.getElementById("model");
+            var selectedBrand = brandSelect.value;
+
+            // Clear previous options
+            modelSelect.innerHTML = "<option value=''>Select Model</option>";
+
+            if (selectedBrand !== "") {
+                var models = Object.keys(mobiles.mobiles[selectedBrand]);
+                models.forEach(function(model) {
+                    var option = document.createElement("option");
+                    option.text = model;
+                    modelSelect.add(option);
+                });
+            }
+        }
+
+        function displayDetails() {
+            var brandSelect = document.getElementById("brand");
+            var modelSelect = document.getElementById("model");
+            var detailsDiv = document.getElementById("details");
+            var selectedBrand = brandSelect.value;
+            var selectedModel = modelSelect.value;
+
+            if (selectedBrand !== "" && selectedModel !== "") {
+                var details = mobiles.mobiles[selectedBrand][selectedModel];
+                detailsDiv.innerHTML = "<h2>" + details.name + "</h2>" +
+                                       "<p>RAM: " + details.ram + "</p>" +
+                                       "<p>ROM: " + details.rom + "</p>" +
+                                       "<p>Camera: " + details.camera + "MP</p>" +
+                                       "<p>Price: " + details.price + "</p>";
+            } else {
+                detailsDiv.innerHTML = "";
+            }
+        }
+    </script>
+</body>
+</html>
